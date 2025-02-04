@@ -5,33 +5,34 @@ using TripManager.Models;
 
 namespace TripManager.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
-    {
+    public class ApplicationDbContext : IdentityDbContext<User>
+    {        
+
+        public DbSet<Tour> Tours { get; set; }
+        public DbSet<Landmark> Landmarks { get; set; }
+        public DbSet<TourLandmark> TourLandmarks { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Tour> Tours { get; set; }
-        public DbSet<Landmark> Landmarks { get; set; }
-        public DbSet<UserTour> UserTours { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder); // Ensure Identity configurations are applied
+            base.OnModelCreating(builder);
 
-            modelBuilder.Entity<UserTour>()
-                .HasKey(ut => new { ut.UserId, ut.TourId });
+            builder.Entity<TourLandmark>()
+                .HasKey(tl => new { tl.TourId, tl.LandmarkId });
 
-            modelBuilder.Entity<UserTour>()
-                .HasOne(ut => ut.User)
-                .WithMany(u => u.UserTours)
-                .HasForeignKey(ut => ut.UserId);
+            builder.Entity<TourLandmark>()
+                .HasOne(tl => tl.Tour)
+                .WithMany(t => t.TourLandmarks)
+                .HasForeignKey(tl => tl.TourId);
 
-            modelBuilder.Entity<UserTour>()
-                .HasOne(ut => ut.Tour)
-                .WithMany(t => t.UserTours)
-                .HasForeignKey(ut => ut.TourId);
+            builder.Entity<TourLandmark>()
+                .HasOne(tl => tl.Landmark)
+                .WithMany()
+                .HasForeignKey(tl => tl.LandmarkId);
         }
+    
     }
 }

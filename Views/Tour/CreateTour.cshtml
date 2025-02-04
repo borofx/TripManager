@@ -1,0 +1,45 @@
+﻿@model IEnumerable<TripManager.Models.Tour>
+
+@{
+    ViewData["Title"] = "My Tours";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a href="@Url.Action("CreateTour", "Tour")" class="btn btn-primary">Create New Tour</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Landmarks</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tour in Model)
+        {
+            <tr>
+                <td>@tour.Name</td>
+                <td>
+                    @foreach (var tourLandmark in tour.TourLandmarks)
+                    {
+                        <span>@tourLandmark.Landmark.Name</span>
+
+                        <br />
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("AddLandmarkToTour", "Tour", new { tourId = tour.Id })" class="btn btn-info">Add Landmarks</a>
+                    <form action="@Url.Action("RemoveLandmarkFromTour", "Tour")" method="post" class="d-inline">
+                        <input type="hidden" name="tourId" value="@tour.Id" />
+                        <input type="hidden" name="landmarkId" value="@tour.TourLandmarks.FirstOrDefault()?.LandmarkId" />
+                        <button type="submit" class="btn btn-danger">Remove Landmark</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using TripManager.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace TripManager.Models
-{
+{   
+
     public class Landmark
     {
-        public Guid LandmarkId { get; set; } = Guid.NewGuid(); // Primary key
+        public int Id { get; set; }
 
-        public string Name { get; set; }
-        public string Location { get; set; } // Geographical coordinates as string or separate latitude/longitude fields
-        public string Description { get; set; }
+        [Required]
+        public string Name { get; set; } = string.Empty;
 
-        // Optional: If you want to associate landmarks directly with tours, add this:
-        public ICollection<Tour> Tours { get; set; } = new List<Tour>();
+        [Required]
+        public double Latitude { get; set; }
+
+        [Required]
+        public double Longitude { get; set; }
     }
+
 }

@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using TripManager.Models;
 
-namespace TripManager.Models
+public class User : IdentityUser
 {
-    public class User : IdentityUser<Guid>
-    {
-        public string FullName { get; set; } = null!;
-        public ICollection<UserTour> UserTours { get; set; } = new List<UserTour>();
-    }
+    public ICollection<Tour> Tours { get; set; } = new List<Tour>();
 }

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<TripManager.Models.Landmark>
+
+@{
+    ViewData["Title"] = "Manage Landmarks";
+}
+
+<h2>Manage Landmarks</h2>
+<a asp-action="Create" class="btn btn-primary">Add New Landmark</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var landmark in Model)
+        {
+            <tr>
+                <td>@landmark.Name</td>
+                <td>@landmark.Latitude</td>
+                <td>@landmark.Longitude</td>
+            </tr>
+        }
+    </tbody>
+</table>
