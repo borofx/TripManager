@@ -1,45 +1,50 @@
-﻿@model IEnumerable<TripManager.Models.Tour>
-
+﻿@model TripManager.Models.Tour
 @{
-    ViewData["Title"] = "My Tours";
+    ViewData["Title"] = "Create Tour";
 }
+<h2>Create Tour</h2>
 
-<h1>@ViewData["Title"]</h1>
+<form asp-action="CreateTour" method="post">
+    @Html.AntiForgeryToken()
 
-<p>
-    <a href="@Url.Action("CreateTour", "Tour")" class="btn btn-primary">Create New Tour</a>
-</p>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Landmarks</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tour in Model)
+    <div class="form-group">
+        <label>Select Landmarks</label><br />
+        @if (ViewBag.Landmarks != null)
         {
-            <tr>
-                <td>@tour.Name</td>
-                <td>
-                    @foreach (var tourLandmark in tour.TourLandmarks)
-                    {
-                        <span>@tourLandmark.Landmark.Name</span>
-
-                        <br />
-                    }
-                </td>
-                <td>
-                    <a href="@Url.Action("AddLandmarkToTour", "Tour", new { tourId = tour.Id })" class="btn btn-info">Add Landmarks</a>
-                    <form action="@Url.Action("RemoveLandmarkFromTour", "Tour")" method="post" class="d-inline">
-                        <input type="hidden" name="tourId" value="@tour.Id" />
-                        <input type="hidden" name="landmarkId" value="@tour.TourLandmarks.FirstOrDefault()?.LandmarkId" />
-                        <button type="submit" class="btn btn-danger">Remove Landmark</button>
-                    </form>
-                </td>
-            </tr>
+            @foreach (var landmark in ViewBag.Landmarks)
+            {
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input"
+                           name="selectedLandmarkIds"
+                           value="@landmark.Id"
+                           id="landmark_@landmark.Id" />
+                    <label class="form-check-label" for="landmark_@landmark.Id">
+                        @landmark.Name
+                    </label>
+                </div>
+            }
         }
-    </tbody>
-</table>
+    </div>
+
+    <div class="validation-summary-errors text-danger">
+        @Html.ValidationSummary(false)
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Create Tour</button>
+</form>
+
+<div>
+    <a asp-action="MyTours">Back to My Tours</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

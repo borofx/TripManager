@@ -179,7 +179,7 @@ namespace TripManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Landmarks");
+                    b.ToTable("Landmarks", (string)null);
                 });
 
             modelBuilder.Entity("TripManager.Models.Tour", b =>
@@ -202,7 +202,7 @@ namespace TripManager.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tours");
+                    b.ToTable("Tours", (string)null);
                 });
 
             modelBuilder.Entity("TripManager.Models.TourLandmark", b =>
@@ -217,7 +217,7 @@ namespace TripManager.Migrations
 
                     b.HasIndex("LandmarkId");
 
-                    b.ToTable("TourLandmarks");
+                    b.ToTable("TourLandmarks", (string)null);
                 });
 
             modelBuilder.Entity("User", b =>

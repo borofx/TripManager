@@ -12,11 +12,13 @@ namespace TripManager.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly ILogger<TourController> _logger;
 
-        public TourController(ApplicationDbContext context, UserManager<User> userManager)
+        public TourController(ApplicationDbContext context, UserManager<User> userManager, ILogger<TourController> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
         // **Admin-only**: View all landmarks for adding to tours (Create/Manage)
@@ -89,34 +91,79 @@ namespace TripManager.Controllers
         public async Task<IActionResult> MyTours()
         {
             var userId = _userManager.GetUserId(User);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
+
             var tours = await _context.Tours
                 .Where(t => t.UserId == userId)
                 .Include(t => t.TourLandmarks)
-                .ThenInclude(tl => tl.Landmark)
+                    .ThenInclude(tl => tl.Landmark)
                 .ToListAsync();
-            return View(tours); // Return a view showing the user's tours
+
+            return View(tours);
         }
+
+
 
         // **User-only**: Create a new tour (Plan a trip)
         [HttpGet]
-        public IActionResult CreateTour()
+        public async Task<IActionResult> CreateTour()
         {
-            return View();
+            var landmarks = await _context.Landmarks.ToListAsync(); // Fetch all landmarks
+            ViewBag.Landmarks = landmarks; // Pass landmarks to the view
+            return View(); // Return the CreateTour view
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTour(Tour tour)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateTour(Tour tour, int[] selectedLandmarkIds)
         {
-            if (ModelState.IsValid)
-            {
-                var userId = _userManager.GetUserId(User);
-                tour.UserId = userId;
+            // Remove the ModelState check for UserId and User
+            ModelState.Remove("UserId");
+            ModelState.Remove("User");
 
-                _context.Tours.Add(tour);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(MyTours));
+            if (!ModelState.IsValid)
+            {
+                var landmarks = await _context.Landmarks.ToListAsync();
+                ViewBag.Landmarks = landmarks;
+                return View(tour);
             }
-            return View(tour);
+
+            var userId = _userManager.GetUserId(User);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
+
+            // Create new tour instance
+            var newTour = new Tour
+            {
+                Name = tour.Name,
+                UserId = userId,
+                TourLandmarks = new List<TourLandmark>()
+            };
+
+            if (selectedLandmarkIds != null && selectedLandmarkIds.Length > 0)
+            {
+                foreach (var landmarkId in selectedLandmarkIds)
+                {
+                    var landmark = await _context.Landmarks.FindAsync(landmarkId);
+                    if (landmark != null)
+                    {
+                        newTour.TourLandmarks.Add(new TourLandmark
+                        {
+                            LandmarkId = landmarkId
+                        });
+                    }
+                }
+            }
+
+            _context.Tours.Add(newTour);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(MyTours));
         }
 
         // **User-only**: Add landmarks to the user's tour

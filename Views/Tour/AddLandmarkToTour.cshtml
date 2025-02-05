@@ -6,8 +6,9 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form method="post">
+<form method="post" action="@Url.Action("AddLandmarkToTour", "Tour")">
     <input type="hidden" name="tourId" value="@ViewBag.TourId" />
+
     <table class="table">
         <thead>
             <tr>
@@ -21,7 +22,11 @@
                 <tr>
                     <td>@landmark.Name</td>
                     <td>
-                        <button type="submit" name="landmarkId" value="@landmark.Id" class="btn btn-primary">Add to Tour</button>
+                        <form method="post" action="@Url.Action("AddLandmarkToTour", "Tour")">
+                            <input type="hidden" name="tourId" value="@ViewBag.TourId" />
+                            <input type="hidden" name="landmarkId" value="@landmark.Id" />
+                            <button type="submit" class="btn btn-primary">Add to Tour</button>
+                        </form>
                     </td>
                 </tr>
             }

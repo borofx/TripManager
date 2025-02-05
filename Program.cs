@@ -52,7 +52,7 @@ namespace TripManager
             // Map routes
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Landmark}/{action=Index}/{id?}");
+                pattern: "{controller=Tour}/{action=CreateTour}/{id?}");
             app.MapRazorPages();
 
             // Seed roles and admin user
@@ -63,7 +63,7 @@ namespace TripManager
 
         private static async Task CreateRoles(WebApplication app)
         {
-            var scope = app.Services.CreateScope();
+            using var scope = app.Services.CreateScope();
             var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
@@ -82,15 +82,19 @@ namespace TripManager
                     UserName = "admin@admin.com",
                     Email = "admin@admin.com"
                 };
-                var result = await userManager.CreateAsync(user, "Admin123!"); // Set the password for the admin
+                var result = await userManager.CreateAsync(user, "Admin123!");
                 if (result.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(user, "Admin"); // Add the user to the Admin role
+                    await userManager.AddToRoleAsync(user, "Admin");
                 }
             }
-            else if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+            else
             {
-                await userManager.AddToRoleAsync(adminUser, "Admin"); // Ensure the existing user is assigned to the Admin role
+                // Ensure the existing user is assigned to the Admin role
+                if (!await userManager.IsInRoleAsync(adminUser, "Admin"))
+                {
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
             }
         }
     }
