@@ -21,13 +21,13 @@
             {
                 <tr>
                     <td>@tour.Name</td>
+                    <td>@tour.Description</td>
                     <td>
                         @if (tour.TourLandmarks != null && tour.TourLandmarks.Any())
                         {
                             foreach (var tourLandmark in tour.TourLandmarks)
                             {
                                 <span>@tourLandmark.Landmark.Name</span>
-
                                 <br />
                             }
                         }
@@ -51,4 +51,3 @@
 <div>
     <a asp-action="CreateTour" class="btn btn-primary">Create New Tour</a>
 </div>
-

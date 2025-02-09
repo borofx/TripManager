@@ -20,3 +20,20 @@ html {
 body {
   margin-bottom: 60px;
 }
+.leaflet-container {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-success {
+    transition: all 0.3s ease;
+}
+
+    .btn-success:disabled {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+.form-group {
+    margin-bottom: 1rem;
+}

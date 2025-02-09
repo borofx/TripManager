@@ -120,7 +120,7 @@ namespace TripManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateTour(Tour tour, int[] selectedLandmarkIds)
         {
-            // Remove the ModelState check for UserId and User
+            // Remove ModelState validation for UserId and User
             ModelState.Remove("UserId");
             ModelState.Remove("User");
 
@@ -137,10 +137,11 @@ namespace TripManager.Controllers
                 return Unauthorized();
             }
 
-            // Create new tour instance
+            // Create new tour instance with description
             var newTour = new Tour
             {
                 Name = tour.Name,
+                Description = tour.Description, // Store description
                 UserId = userId,
                 TourLandmarks = new List<TourLandmark>()
             };
@@ -165,6 +166,7 @@ namespace TripManager.Controllers
 
             return RedirectToAction(nameof(MyTours));
         }
+
 
         // **User-only**: Add landmarks to the user's tour
         [HttpGet]

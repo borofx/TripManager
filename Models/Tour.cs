@@ -16,6 +16,10 @@ namespace TripManager.Models
 
         [Required]
         public string Name { get; set; } = string.Empty;
+        [Required]
+        [StringLength(500)]
+        public string Description { get; set; } = string.Empty;
+
 
         public string UserId { get; set; } = string.Empty;
 

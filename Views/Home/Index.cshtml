@@ -1,0 +1,85 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Login/Register</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container-fluid {
+            padding: 0 !important;
+        }
+
+        .split-container {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            margin: 0;
+            position: relative;
+        }
+
+        .split-half {
+            flex: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .center-image {
+            position: absolute;
+            left: 50.15%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            width: 15%;
+            height: 17%;
+        }
+
+        .auth-link {
+            font-size: 2rem;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border: 2px solid white;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+            .auth-link:hover {
+                background-color: white;
+                color: inherit;
+                text-decoration: none;
+            }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="split-container">
+            <img src="@Url.Content("~/buslogo.png")" alt="Center Logo" class="center-image" />
+
+            <div class="split-half" style="background-color: #d36135;">
+                <a href="~/Identity/Account/Register" class="auth-link">Register</a>
+            </div>
+
+            <div class="split-half" style="background-color: #4ECDC4;">
+                <a href="~/Identity/Account/Login" class="auth-link">Login</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

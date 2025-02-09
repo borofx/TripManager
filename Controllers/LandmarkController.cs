@@ -48,9 +48,17 @@ namespace TripManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(landmark);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(landmark);
+                    await _context.SaveChangesAsync();
+                    TempData["Success"] = "Landmark created successfully!";
+                    return RedirectToAction("ManageLandmarks", "Tour");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Error creating landmark: " + ex.Message);
+                }
             }
             return View(landmark);
         }
