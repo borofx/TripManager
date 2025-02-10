@@ -131,23 +131,6 @@
             gap: 12px;
             justify-content: center;
         }
-
-        .social-button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 12px;
-            background: #f7fafc;
-            color: #2d3748;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .social-button:hover {
-            background: #edf2f7;
-            transform: translateY(-1px);
-        }
-
         .text-danger {
             color: #e53e3e;
             font-size: 0.875rem;
@@ -191,16 +174,10 @@
             <button type="submit" class="btn-primary">Register</button>
         </form>
         <div class="social-login">
-            <a asp-page=" ./Login" asp-route-returnUrl="@Model.ReturnUrl"><h3>or Log in</h3></a>
-            <div class="social-buttons">
-                <button class="social-button">Google</button>
-                <button class="social-button">Facebook</button>
-                <button class="social-button">Apple</button>
-            </div>
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl"><h3>or Log in</h3></a>            
         </div>
     </div>
 </body>
-</html>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

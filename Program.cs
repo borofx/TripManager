@@ -52,7 +52,7 @@ namespace TripManager
             // Map routes
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Tour}/{action=CreateTour}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
             // Seed roles and admin user
