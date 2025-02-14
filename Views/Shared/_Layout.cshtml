@@ -6,15 +6,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TripManager</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TripManager.styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TripManager</a>
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                </form>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -52,9 +55,89 @@
             &copy; 2025 - TripManager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+<style>
+    /* Modernized Styles */
+    body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+    background-color: #f8f9fa; /* Light background */
+    }
+
+    .navbar {
+    background-color: #fff; /* White navbar */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    padding: 1rem; /* Add some padding */
+    }
+
+    .navbar-brand {
+    font-weight: 600;
+    color: #343a40; /* Darker brand color */
+    text-decoration: none; /* Remove underline from brand */
+    }
+
+    .navbar-toggler {
+    border: none; /* Remove default border */
+    }
+
+    .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 0, 0, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* Custom toggle icon */
+    }
+
+
+    .nav-link {
+    color: #343a40 !important; /* Darker link color */
+    transition: all 0.3s ease; /* Smooth transitions */
+    padding: 0.5rem 1rem; /* Adjust padding as needed */
+    }
+
+    .nav-link:hover {
+    color: #007bff !important; /* Blue hover color */
+    }
+
+    .btn-link {
+    color: #007bff; /* Blue button link */
+    text-decoration: none; /* Remove underline */
+    padding: 0.5rem 1rem; /* Adjust padding as needed */
+    border: none; /* Remove default border */
+    background: none; /* Remove default background */
+    }
+
+    .btn-link:hover {
+    text-decoration: underline; /* Add underline on hover */
+    }
+
+
+    .container {
+    margin-top: 20px; /* Add some top margin to the content */
+    }
+
+    .footer {
+    background-color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem; /* Add some top margin */
+    }
+
+    /* Example of a more modern card style for your content */
+    .card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s; /* Smooth scaling on hover */
+    }
+
+    .card:hover {
+    transform: scale(1.02);
+    }
+
+    /* Styles for the map */
+    #map {
+    height: 20px; /* Adjust as needed */
+    width: 100%;
+    border-radius: 8px; /* Rounded corners for the map */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for the map */
+    }
+</style>

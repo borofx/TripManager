@@ -37,3 +37,12 @@ body {
 .form-group {
     margin-bottom: 1rem;
 }
+.navbar-nav flex-grow-1{
+    margin-left: auto;
+}
+#map {
+    height: 600px; /* Adjust as needed */
+    width: 100%;
+    border-radius: 8px; /* Rounded corners for the map */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for the map */
+}
