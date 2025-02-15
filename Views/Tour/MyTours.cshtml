@@ -36,6 +36,12 @@
                             <span>No landmarks selected</span>
                         }
                     </td>
+                    <td>
+                        <form action="@Url.Action("DeleteTour", "Tour")" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@tour.Id" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             }
         }

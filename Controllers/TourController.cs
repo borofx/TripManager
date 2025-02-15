@@ -105,8 +105,20 @@ namespace TripManager.Controllers
             return View(tours);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteTour(int id)
+        {
+            var tour = await _context.Tours
+                    .Include(t => t.TourLandmarks)
+                    .FirstOrDefaultAsync(t => t.Id == id);
 
-
+            if (tour != null)
+            {
+                _context.Tours.Remove(tour);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(MyTours));
+        }
         // **User-only**: Create a new tour (Plan a trip)
         [HttpGet]
         public async Task<IActionResult> CreateTour()
@@ -166,7 +178,10 @@ namespace TripManager.Controllers
 
             return RedirectToAction(nameof(MyTours));
         }
-
+        public IActionResult Map()
+        {
+            return View();
+        }
 
         // **User-only**: Add landmarks to the user's tour
         [HttpGet]
@@ -214,6 +229,38 @@ namespace TripManager.Controllers
             }
 
             return RedirectToAction(nameof(MyTours));
+        }
+        // Add this method to your existing TourController
+        [HttpGet]
+        [Route("api/tours")]
+        public async Task<IActionResult> GetTours()  // Changed return type to IActionResult
+        {
+            var userId = _userManager.GetUserId(User);
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized();
+            }
+
+            var tours = await _context.Tours
+                .Where(t => t.UserId == userId)
+                .Include(t => t.TourLandmarks)
+                    .ThenInclude(tl => tl.Landmark)
+                .Select(t => new
+                {
+                    t.Id,
+                    t.Name,
+                    t.Description,
+                    Landmarks = t.TourLandmarks.Select(tl => new
+                    {
+                        tl.Landmark.Id,
+                        tl.Landmark.Name,
+                        tl.Landmark.Latitude,
+                        tl.Landmark.Longitude                        
+                    })
+                })
+                .ToListAsync();
+
+            return Json(tours);
         }
     }
 }

@@ -103,7 +103,7 @@ namespace TripManager.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/Landmark/Index");
+            returnUrl ??= Url.Content("~/Tour/ManageLandmarks");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {

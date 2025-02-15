@@ -37,7 +37,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Tour" asp-action="MyTours">My tours</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Landmark" asp-action="Map">Map</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tour" asp-action="Map">Map</a>
                         </li>
                     </ul>
                 </div>
@@ -52,7 +52,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - TripManager - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - TripManager
         </div>
     </footer>
     <script src="~/js/site.js" asp-append-version="true"></script>
@@ -98,20 +98,20 @@
     }
 
     .btn-link {
-    color: #007bff; /* Blue button link */
-    text-decoration: none; /* Remove underline */
-    padding: 0.5rem 1rem; /* Adjust padding as needed */
-    border: none; /* Remove default border */
-    background: none; /* Remove default background */
+    color: #007bff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: none; 
+    background: none;
     }
 
     .btn-link:hover {
-    text-decoration: underline; /* Add underline on hover */
+    text-decoration: underline;
     }
 
 
     .container {
-    margin-top: 20px; /* Add some top margin to the content */
+    margin-top: 20px;
     }
 
     .footer {
@@ -119,14 +119,14 @@
     padding: 10px 0;
     text-align: center;
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 2rem; /* Add some top margin */
+    margin-top: 30px; 
     }
 
     /* Example of a more modern card style for your content */
     .card {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s; /* Smooth scaling on hover */
+    transition: transform 1.1s; 
     }
 
     .card:hover {
@@ -139,5 +139,13 @@
     width: 100%;
     border-radius: 8px; /* Rounded corners for the map */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for the map */
+    }
+
+    .footer[b-1ezxuiy03j] {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        white-space: wrap;
+        line-height: 30px;
     }
 </style>
